@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yamifood Restaurant</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      --primary: #b22222;
+      --primary-dark: #8b1a1a;
+      --accent: #d4a373;
+      --dark: #1f1f1f;
+      --gray: #6b7280;
+      --light: #f9f5f0;
+      --white: #ffffff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+      line-height: 1.2;
+    }
+
+    /* ── Header & Mobile Menu ── */
+    header {
+      position: sticky;
+      top: 0;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+
+    .header-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo img {
+      max-height: 52px;
+      width: auto;
+    }
+
+    .nav-toggle { display: none; }
+    .nav-toggle-label {
+      display: none;
+      font-size: 1.9rem;
+      color: var(--dark);
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+    }
+
+    nav a {
+      margin-left: 1.9rem;
+      text-decoration: none;
+      color: var(--dark);
+      font-weight: 500;
+      transition: color 0.25s;
+    }
+
+    nav a:hover, nav a.active { color: var(--primary); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 85vh;
+      background: linear-gradient(rgba(0,0,0,0.58), rgba(0,0,0,0.58)),
+                  url('img/slider-02.jpg') center/cover no-repeat fixed;
+      color: white;
+      display: flex;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 9vw, 5.8rem);
+      margin-bottom: 1.4rem;
+    }
+
+    .hero p {
+      font-size: clamp(1.1rem, 3vw, 1.3rem);
+      margin-bottom: 2.2rem;
+      opacity: 0.92;
+      max-width: 680px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--primary);
+      color: white;
+      padding: 0.95rem 2.3rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(178,34,34,0.28);
+    }
+
+    /* ── Sections ── */
+    section { padding: clamp(4rem, 8vw, 7rem) 0; }
+
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 2.8rem);
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: var(--gray);
+      font-size: clamp(1rem, 2.5vw, 1.15rem);
+      max-width: 720px;
+      margin: 0 auto 3rem;
+    }
+
+    /* About */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .about-img img {
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    }
+
+    /* Quote */
+    .quote {
+      background: linear-gradient(rgba(0,0,0,0.68), rgba(0,0,0,0.68)),
+                  url('img/qt-bg.jpg') center/cover no-repeat fixed;
+      color: white;
+      text-align: center;
+      padding: clamp(6rem, 12vw, 10rem) 1.5rem;
+    }
+
+    .quote blockquote {
+      font-size: clamp(1.6rem, 4vw, 2.1rem);
+      font-style: italic;
+      max-width: 900px;
+      margin: 0 auto 1.2rem;
+      line-height: 1.4;
+    }
+
+    .quote cite {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+    }
+
+    /* Menu & Gallery */
+    .filters {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .filter-btn {
+      padding: 0.7rem 1.6rem;
+      border: 2px solid var(--accent);
+      background: transparent;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover, .filter-btn.active {
+      background: var(--accent);
+      color: var(--dark);
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      border-radius: 10px;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-grid img:hover {
+      transform: scale(1.06);
+    }
+
+    /* Testimonial */
+    .testimonial {
+      max-width: 720px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 0 1rem;
+    }
+
+    .testimonial img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.6rem;
+      border: 5px solid var(--light);
+    }
+
+    .testimonial h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+
+    .testimonial .job {
+      color: var(--gray);
+      font-size: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Contact Bar */
+    .contact-bar {
+      background: var(--accent);
+      color: white;
+      padding: clamp(4rem, 8vw, 5.5rem) 1rem;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2.5rem;
+      text-align: center;
+    }
+
+    .contact-item i {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+      background: white;
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin: 0 auto 0.8rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark);
+      color: #ddd;
+      padding: 5rem 1rem 2.5rem;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 3rem;
+      margin-bottom: 3.5rem;
+    }
+
+    .footer-title {
+      font-size: 1.4rem;
+      color: white;
+      margin-bottom: 1.2rem;
+    }
+
+    footer a, footer p {
+      color: #ccc;
+      text-decoration: none;
+      line-height: 1.9;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    .social-icons a {
+      font-size: 1.5rem;
+      margin-right: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover { color: var(--accent); }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid #444;
+      font-size: 0.95rem;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1024px) {
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .hero { min-height: 70vh; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-toggle-label { display: block; }
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 1.5rem 0;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.35s ease;
+      }
+
+      .nav-toggle:checked ~ nav {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+
+      nav a { margin: 0.9rem 0; font-size: 1.1rem; }
+
+      .hero h1 { font-size: clamp(2.6rem, 9vw, 4.2rem); }
+      .hero p { font-size: 1.1rem; }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 0 1rem; }
+      .btn { padding: 0.85rem 1.8rem; font-size: 1rem; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo">
+        <img src="img/logo.png" alt="Yamifood Restaurant">
+      </div>
+
+      <input type="checkbox" id="nav-toggle" class="nav-toggle">
+      <label for="nav-toggle" class="nav-toggle-label"><i class="fas fa-bars"></i></label>
+
+      <nav>
+        <a href="#" class="active">Home</a>
+        <a href="menu.html">Menu</a>
+        <a href="about.html">About</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="Reservation.html">Reservation</a>
+        <a href="stuff.html">Stuff</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Welcome To<br>Yamifood Restaurant</h1>
+      <p>Experience authentic flavors crafted with passion. Book your table today and join us for an unforgettable dining journey.</p>
+      <a href="Reservation.html" class="btn">Make a Reservation</a>
+    </div>
+  </section>
+
+  <main>
+
+    <!-- About -->
+    <section class="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-img">
+            <img src="img/about-img.jpg" alt="Our restaurant interior" loading="lazy">
+          </div>
+          <div>
+            <h2 class="section-title" style="text-align:left;">Welcome To Yamifood</h2>
+            <p style="font-size:1.3rem; margin:1.5rem 0; color:var(--primary);">Little story</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque auctor suscipit feugiat. Ut at pellentesque ante, sed convallis arcu. Nullam facilisis, eros in eleifend luctus, odio ante sodales augue, eget lacinia lectus erat et sem.</p>
+            <p style="margin:1.5rem 0;">Sed semper orci sit amet porta placerat. Etiam quis finibus eros. Sed aliquam metus lorem, a pellentesque tellus pretium a. Nulla placerat elit in justo vestibulum, et maximus sem pulvinar.</p>
+            <a href="Reservation.html" class="btn btn-outline">Reserve Your Table</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quote -->
+    <section class="quote">
+      <blockquote>
+        "If you're not the one cooking, stay out of the way and compliment the chef."
+      </blockquote>
+      <cite>— Michael Strahan</cite>
+    </section>
+
+    <!-- Special Menu -->
+    <section class="menu">
+      <div class="container">
+        <h2 class="section-title">Special Menu</h2>
+        <p class="section-subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+
+        <div class="filters">
+          <button class="filter-btn active">All</button>
+          <button class="filter-btn">Drinks</button>
+          <button class="filter-btn">Lunch</button>
+          <button class="filter-btn">Dinner</button>
+        </div>
+
+        <div class="gallery-grid">
+          <img src="img/img-01.jpg" alt="Dish 1" loading="lazy">
+          <img src="img/img-02.jpg" alt="Dish 2" loading="lazy">
+          <img src="img/img-03.jpg" alt="Dish 3" loading="lazy">
+          <img src="img/img-04.jpg" alt="Dish 4" loading="lazy">
+          <img src="img/img-05.jpg" alt="Dish 5" loading="lazy">
+          <img src="img/img-06.jpg" alt="Dish 6" loading="lazy">
+          <img src="img/img-07.jpg" alt="Dish 7" loading="lazy">
+          <img src="img/img-08.jpg" alt="Dish 8" loading="lazy">
+          <img src="img/img-09.jpg" alt="Dish 9" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery">
+      <div class="container">
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+        
+        <div class="gallery-grid">
+          <img src="img/gallery-img-01.jpg" alt="Gallery 1" loading="lazy">
+          <img src="img/gallery-img-02.jpg" alt="Gallery 2" loading="lazy">
+          <img src="img/gallery-img-03.jpg" alt="Gallery 3" loading="lazy">
+          <img src="img/gallery-img-04.jpg" alt="Gallery 4" loading="lazy">
+          <img src="img/gallery-img-05.jpg" alt="Gallery 5" loading="lazy">
+          <img src="img/gallery-img-06.jpg" alt="Gallery 6" loading="lazy">
+        </div>
+      </div>
+    </section>
+
+    <!-- Customer Reviews -->
+    <section class="reviews">
+      <div class="container">
+        <h2 class="section-title">Customer Reviews</h2>
+        <p class="section-subtitle">What our guests are saying</p>
+
+        <div class="testimonial">
+          <img src="img/profile-1.jpg" alt="Paul Mitchel" loading="lazy">
+          <h3>Paul Mitchel</h3>
+          <div class="job">Web Developer</div>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Bar -->
+    <section class="contact-bar">
+      <div class="container">
+        <div class="contact-grid">
+          <div class="contact-item">
+            <i class="fas fa-phone-volume"></i>
+            <h3>Phone</h3>
+            <p>+01 123-456-4590</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <h3>Email</h3>
+            <p>info@yamifood.com</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <h3>Location</h3>
+            <p>Ipsum Street, Lorem Tower,<br>MO, Columbia</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">About Us</div>
+          <p>Integer cursus scelerisque ipsum id efficitur. Donec a dui fringilla, gravida lorem ac, semper magna. Aenean rhoncus ac lectus a interdum.</p>
+        </div>
+        <div>
+          <div class="footer-title">Opening Hours</div>
+          <p>Monday: Closed<br>Tue-Wed: 9:00 am - 10:00 pm<br>Thu-Fri: 9:00 am - 10:00 pm<br>Sat-Sun: 5:00 pm - 10:00 pm</p>
+        </div>
+        <div>
+          <div class="footer-title">Contact Info</div>
+          <p>Ipsum Street, Lorem Tower,<br>MO, Columbia, 508000<br><br>+01 2000 800 9999<br>info@admin.com</p>
+        </div>
+        <div>
+          <div class="footer-title">Subscribe</div>
+          <form style="margin:1.2rem 0;">
+            <input type="email" placeholder="Your email address..." style="width:100%; padding:0.9rem; border:none; border-radius:6px; margin-bottom:1rem; font-size:1rem;">
+            <button type="submit" class="btn" style="width:100%;">Subscribe</button>
+          </form>
+          <div class="social-icons" style="margin-top:1.5rem;">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-dribbble"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="copyright">
+        All Rights Reserved © 2025 Yamifood Restaurant • Designed with passion
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Special Menu • Yamifood Restaurant</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary: #b22222;
+            --primary-dark: #8b1a1a;
+            --accent: #d4a373;
+            --dark: #1f1f1f;
+            --gray: #6b7280;
+            --light: #f9f5f0;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: var(--white);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 4vw, 1.5rem);
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Playfair Display', serif;
+            line-height: 1.2;
+        }
+
+        /* ── Header + Mobile Menu ── */
+        header {
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            z-index: 1000;
+            padding: clamp(0.9rem, 2vw, 1.2rem) 0;
+        }
+
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            max-height: clamp(45px, 8vw, 55px);
+            width: auto;
+        }
+
+        .nav-toggle {
+            display: none;
+        }
+
+        .nav-toggle-label {
+            display: none;
+            font-size: 1.9rem;
+            color: var(--dark);
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+        }
+
+        nav a {
+            margin-left: 1.8rem;
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.25s;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: var(--primary);
+        }
+
+        /* ── Page Hero ── */
+        .page-hero {
+            min-height: clamp(40vh, 50vh, 60vh);
+            background: linear-gradient(rgba(0, 0, 0, 0.58), rgba(0, 0, 0, 0.58)),
+                url('img/all-bg.jpg') center/cover no-repeat;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .page-hero h1 {
+            font-size: clamp(2.6rem, 9vw, 5rem);
+        }
+
+        /* ── Sections ── */
+        section {
+            padding: clamp(4rem, 8vw, 7rem) 0;
+        }
+
+        .section-title {
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--gray);
+            font-size: clamp(1rem, 2.5vw, 1.15rem);
+            max-width: 720px;
+            margin: 0 auto 2.5rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: clamp(0.8rem, 2vw, 1.2rem);
+            margin-bottom: clamp(2rem, 4vw, 3.5rem);
+        }
+
+        .filter-btn {
+            padding: clamp(0.7rem, 1.8vw, 0.9rem) clamp(1.2rem, 3vw, 2rem);
+            border: 2px solid var(--accent);
+            background: transparent;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        /* Menu Grid */
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1.2rem, 3vw, 2rem);
+        }
+
+        .menu-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item img {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .menu-item:hover img {
+            transform: scale(1.08);
+        }
+
+        /* Quote */
+        .quote {
+            background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+                url('img/qt-bg.jpg') center/cover no-repeat fixed;
+            color: white;
+            text-align: center;
+            padding: clamp(6rem, 12vw, 9rem) 1.5rem;
+        }
+
+        .quote blockquote {
+            font-size: clamp(1.6rem, 4vw, 2.1rem);
+            font-style: italic;
+            max-width: 900px;
+            margin: 0 auto 1.2rem;
+            line-height: 1.4;
+        }
+
+        .quote cite {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            opacity: 0.9;
+        }
+
+        /* Testimonial */
+        .testimonial {
+            max-width: 720px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        .testimonial img {
+            width: clamp(110px, 20vw, 140px);
+            height: clamp(110px, 20vw, 140px);
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.6rem;
+            border: 5px solid var(--light);
+        }
+
+        .testimonial h3 {
+            font-size: clamp(1.3rem, 3vw, 1.6rem);
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .testimonial .job {
+            color: var(--gray);
+            font-size: clamp(0.9rem, 2.2vw, 1rem);
+            margin-bottom: 1.2rem;
+        }
+
+        /* Contact Bar */
+        .contact-bar {
+            background: var(--accent);
+            color: white;
+            padding: clamp(4rem, 8vw, 5rem) 1rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: clamp(2rem, 4vw, 3rem);
+            text-align: center;
+        }
+
+        .contact-item i {
+            font-size: clamp(2.2rem, 5vw, 2.8rem);
+            margin-bottom: 1rem;
+            color: var(--primary);
+            background: white;
+            width: clamp(65px, 12vw, 80px);
+            height: clamp(65px, 12vw, 80px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: #ddd;
+            padding: clamp(4rem, 8vw, 6rem) 1rem clamp(2rem, 5vw, 3rem);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: clamp(2.5rem, 5vw, 3rem);
+            margin-bottom: 3.5rem;
+        }
+
+        .footer-title {
+            font-size: clamp(1.3rem, 3vw, 1.5rem);
+            color: white;
+            margin-bottom: 1.2rem;
+        }
+
+        footer a,
+        footer p {
+            color: #bbb;
+            text-decoration: none;
+            line-height: 1.9;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        .social-icons a {
+            font-size: clamp(1.4rem, 3vw, 1.6rem);
+            margin-right: 1.2rem;
+            transition: color 0.3s;
+        }
+
+        .social-icons a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            font-size: 0.95rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 1024px) {
+            .page-hero {
+                min-height: 45vh;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-toggle-label {
+                display: block;
+            }
+
+            nav {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 1.5rem 0;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.35s ease;
+            }
+
+            .nav-toggle:checked~nav {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            nav a {
+                margin: 0.9rem 0;
+                font-size: 1.1rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-hero h1 {
+                font-size: clamp(2.5rem, 9vw, 4rem);
+            }
+
+            section {
+                padding: clamp(3.5rem, 7vw, 5rem) 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header with Hamburger -->
+    <header>
+        <div class="container header-inner">
+            <div class="logo">
+                <img src="img/logo.png" alt="Yamifood Restaurant Logo">
+            </div>
+
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label"><i class="fas fa-bars"></i></label>
+
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="menu.html" class="active">Menu</a>
+                <a href="about.html">About</a>
+                <a href="gallery.html">Gallery</a>
+
+                <a href="Reservation.html">Reservation</a>
+                <a href="stuff.html">Stuff</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Hero -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>Special Menu</h1>
+        </div>
+    </section>
+
+    <main>
+
+        <!-- Menu Section -->
+        <section class="menu">
+            <div class="container">
+                <h2 class="section-title">Our Special Menu</h2>
+                <p class="section-subtitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                </p>
+
+                <div class="filters">
+                    <button class="filter-btn active">All</button>
+                    <button class="filter-btn">Drinks</button>
+                    <button class="filter-btn">Lunch</button>
+                    <button class="filter-btn">Dinner</button>
+                </div>
+
+                <div class="menu-grid">
+                    <div class="menu-item">
+                        <img src="img/img-01.jpg" alt="Menu item 1" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-02.jpg" alt="Menu item 2" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-03.jpg" alt="Menu item 3" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-04.jpg" alt="Menu item 4" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-05.jpg" alt="Menu item 5" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-06.jpg" alt="Menu item 6" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-07.jpg" alt="Menu item 7" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-08.jpg" alt="Menu item 8" loading="lazy">
+                    </div>
+                    <div class="menu-item">
+                        <img src="img/img-09.jpg" alt="Menu item 9" loading="lazy">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quote -->
+        <section class="quote">
+            <blockquote>
+                "If you're not the one cooking, stay out of the way and compliment the chef."
+            </blockquote>
+            <cite>— Michael Strahan</cite>
+        </section>
+
+        <!-- Testimonial -->
+        <section class="reviews">
+            <div class="container">
+                <div class="testimonial">
+                    <img src="img/profile-1.jpg" alt="Paul Mitchel" loading="lazy">
+                    <h3>Paul Mitchel</h3>
+                    <div class="job">Web Developer</div>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at,
+                        luctus dui. Mauris magna metus, dapibus nec turpis vel, semper malesuada ante.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Bar -->
+        <section class="contact-bar">
+            <div class="container">
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i class="fas fa-phone-volume"></i>
+                        <h3>Phone</h3>
+                        <p>+01 123-456-4590</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <h3>Email</h3>
+                        <p>info@yamifood.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Location</h3>
+                        <p>Ipsum Street, Lorem Tower,<br>MO, Columbia, 508000</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-title">About Us</div>
+                    <p>Integer cursus scelerisque ipsum id efficitur. Donec a dui fringilla, gravida lorem ac, semper
+                        magna. Aenean rhoncus ac lectus a interdum.</p>
+                </div>
+                <div>
+                    <div class="footer-title">Opening Hours</div>
+                    <p>Monday: Closed<br>Tue-Wed: 9:00 am - 10:00 pm<br>Thu-Fri: 9:00 am - 10:00 pm<br>Sat-Sun: 5:00 pm
+                        - 10:00 pm</p>
+                </div>
+                <div>
+                    <div class="footer-title">Contact Info</div>
+                    <p>Ipsum Street, Lorem Tower,<br>MO, Columbia, 508000<br><br>+01 2000 800 9999<br>info@admin.com</p>
+                </div>
+                <div>
+                    <div class="footer-title">Follow Us</div>
+                    <div class="social-icons" style="margin-top:1rem;">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-dribbble"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                All Rights Reserved © 2025 Yamifood Restaurant • Designed with passion
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
