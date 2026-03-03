@@ -97,3 +97,5 @@ GitHub: https://github.com/Dev-Chandan404
 > Styled with pure CSS.
 > No frameworks. No noise.
 > Just code.
+>
+> 💡 This project is for learning and front-end development practice.
