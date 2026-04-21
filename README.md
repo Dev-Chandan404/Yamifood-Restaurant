@@ -30,7 +30,7 @@
 <br/>
 
 <a href="https://dev-chandan404.github.io/Yamifood-Restaurant/">
-  <img src="https://api.screenshotone.com/take?url=https://dev-chandan404.github.io/Yamifood-Restaurant/&viewport_width=1280&viewport_height=720&format=jpg&image_quality=90" alt="Yamifood Restaurant Preview" width="90%" />
+  <img src="./img/yf.png" alt="Yamifood Restaurant Preview"/>
 </a>
 
 *Yamifood — A modern, elegant restaurant website built with pure HTML5 & CSS3*
